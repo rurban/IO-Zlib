@@ -1,10 +1,15 @@
+ChangeLog
 MANIFEST
+META.yml
 Makefile.PL
 README
-ChangeLog
+SIGNATURE
 Zlib.pm
+t/0signature.t
 t/basic.t
+t/external.t
 t/getc.t
 t/getline.t
+t/import.t
 t/large.t
 t/tied.t
