@@ -162,7 +162,7 @@ use vars qw($VERSION);
 use Carp;
 use Compress::Zlib;
 
-$VERSION = "0.01";
+$VERSION = "0.02";
 
 sub new
 {
@@ -193,29 +193,29 @@ sub open
 
     croak "open() needs a filename" unless defined($filename);
 
-    $self->{file} = gzopen($filename,$mode);
-    $self->{eof} = 0;
+    $self->{'file'} = gzopen($filename,$mode);
+    $self->{'eof'} = 0;
 
-    return defined($self->{file}) ? $self : undef;
+    return defined($self->{'file'}) ? $self : undef;
 }
 
 sub opened
 {
     my($self) = @_;
 
-    return defined($self->{file});
+    return defined($self->{'file'});
 }
 
 sub close
 {
     my($self) = @_;
 
-    return undef unless defined($self->{file});
+    return undef unless defined($self->{'file'});
 
-    my($status) = $self->{file}->gzclose();
+    my($status) = $self->{'file'}->gzclose();
 
-    delete $self->{file};
-    delete $self->{eof};
+    delete $self->{'file'};
+    delete $self->{'eof'};
 
     return ($status == 0) ? 1 : undef;
 }
@@ -225,9 +225,9 @@ sub getc
     my($self) = @_;
     my($character);
 
-    my($status) = $self->{file}->gzread($character, 1);
+    my($status) = $self->{'file'}->gzread($character, 1);
 
-    $self->{eof} = 1 if $status == 0;
+    $self->{'eof'} = 1 if $status == 0;
 
     return ($status > 0 ) ? $character : "";
 }
@@ -237,9 +237,9 @@ sub getline
     my($self) = @_;
     my($line);
 
-    my($status) = $self->{file}->gzreadline($line);
+    my($status) = $self->{'file'}->gzreadline($line);
 
-    $self->{eof} = 1 if $status == 0;
+    $self->{'eof'} = 1 if $status == 0;
 
     return ($status > 0) ? $line : undef;
 }
@@ -261,7 +261,7 @@ sub print
 {
     my($self) = shift;
 
-    my($status) = $self->{file}->gzwrite(join('', @_));
+    my($status) = $self->{'file'}->gzwrite(join('', @_));
 
     return ($status > 0) ? 1 : 0;
 }
@@ -273,9 +273,9 @@ sub read
     croak "NBYTES must be specified" unless defined($nbytes);
     croak "OFFSET not yet supported" if defined($offset);
 
-    my($status) = $self->{file}->gzread($_[1],$nbytes);
+    my($status) = $self->{'file'}->gzread($_[1],$nbytes);
 
-    $self->{eof} = 1 if $status >= 0 && $status < $nbytes;
+    $self->{'eof'} = 1 if $status >= 0 && $status < $nbytes;
 
     return ($status < 0) ? undef : $status;
 }
@@ -284,7 +284,7 @@ sub eof
 {
     my($self) = @_;
 
-    return $self->{eof};
+    return $self->{'eof'};
 }
 
 sub seek
