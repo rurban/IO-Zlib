@@ -1,3 +1,24 @@
+2007-03-04  Tom Hughes <tom@compton.nu>
+
+	* Zlib.pm
+	  Changed version number to 1.05.
+
+	* Zlib.pm
+	  Added dummy FILENO method to stop the debugger barfing
+	  when asked to dump a IO::Zlib object.
+
+	* Zlib.pm
+	  Removed internal eof flag and use gzeof instead.
+
+	* t/getline.t
+	  Added tests for the eof method while reading lines.
+
+	* t/basic.t
+	  Add test for reading at an offset.
+
+	* Zlib.pm
+	  Allow an offset to be specifed when reading or writing.
+
 2004-09-05  Tom Hughes <tom@compton.nu>
 
         * Zlib.pm
